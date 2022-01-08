@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pacientes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <section class="container my-5">
+      <h3 class="display-6">Registro de Pacientes</h3>
+      <hr />
+      <form id="add_paciente" class="needs-validation" novalidate>
+        <div>
+          <label for="nome">Nome</label>
+          <input
+            type="text"
+            name="nome"
+            id="nome"
+            class="form-control form-control-sm"
+            required
+          />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="form-control form-control-sm"
+            required
+          />
+        </div>
+        <div>
+          <label for="telefone">Telefone</label>
+          <input
+            type="tel"
+            name="telefone"
+            id="telefone"
+            class="form-control form-control-sm"
+            required
+          />
+        </div>
+        <div>
+          <label for="cpf">CPF</label>
+          <input
+            type="text"
+            name="cpf"
+            id="cpf"
+            class="form-control form-control-sm"
+            required
+          />
+        </div>
+        <div>
+          <label for="rg">RG</label>
+          <input
+            type="text"
+            name="rg"
+            id="rg"
+            class="form-control form-control-sm"
+            required
+          />
+        </div>
+        <div>
+          <label for="cep">CEP</label>
+          <input
+            type="text"
+            name="cep"
+            id="cep"
+            class="form-control form-control-sm"
+            required
+          />
+        </div>
+
+        <button id="adicionar" type="submit" class="btn btn-dark mt-3">Adicionar</button>
+      </form>
+    </section>
+
+    <section id="cont-tabela" class="container my-5">
+      <h3 class="display-6">Lista de Pacientes</h3>
+      <hr />
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead id="thead" class="table-dark">
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>CPF</th>
+              <th>RG</th>
+              <th>CEP</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="pacientes"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="modal fade" id="edit-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Paciente</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="edit_paciente" novalidate>
+              <input type="hidden" name="id" id="id" />
+              <div>
+                <label for="nome_edit">Nome</label>
+                <input
+                  type="text"
+                  name="nome_edit"
+                  id="nome_edit"
+                  class="form-control form-control-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label for="email_edit">Email</label>
+                <input
+                  type="email"
+                  name="email_edit"
+                  id="email_edit"
+                  class="form-control form-control-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label for="telefone_edit">Telefone</label>
+                <input
+                  type="tel"
+                  name="telefone_edit"
+                  id="telefone_edit"
+                  class="form-control form-control-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label for="cpf_edit">CPF</label>
+                <input
+                  type="text"
+                  name="cpf_edit"
+                  id="cpf_edit"
+                  class="form-control form-control-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label for="rg_edit">RG</label>
+                <input
+                  type="text"
+                  name="rg_edit"
+                  id="rg_edit"
+                  class="form-control form-control-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label for="cep_edit">CEP</label>
+                <input
+                  type="text"
+                  name="cep_edit"
+                  id="cep_edit"
+                  class="form-control form-control-sm"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-dark mt-3">Atualizar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Adição -->
+    <div class="position-fixed bottom-0 start-0 p-3">
+      <div id="edit_toast" class="toast bg-success text-white">
+        <div class="d-flex">
+          <div class="toast-body">Usuário atualizado com sucesso!</div>
+          <button
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Remoção -->
+    <div class="position-fixed bottom-0 start-0 p-3">
+      <div id="del_toast" class="toast bg-danger text-white">
+        <div class="d-flex">
+          <div class="toast-body">Usuário deletado com sucesso!</div>
+          <button
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="./src/index.js"></script>
+  </body>
+</html>
