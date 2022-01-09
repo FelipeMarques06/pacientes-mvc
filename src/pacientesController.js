@@ -77,7 +77,6 @@ export default class PacientesController {
 
         this.model.add(data);
         $("#add_paciente input").val("");
-        localStorage.setItem("pacientes", JSON.stringify(this.model))
         this.build();
 
         form.removeClass("was-validated");
